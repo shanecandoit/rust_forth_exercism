@@ -103,7 +103,12 @@ impl Forth {
                         self.values.push(top);
                         self.values.push(top);
                     }
-                    "DROP" => {}
+                    "DROP" => {
+                        if self.values.len() < 1 {
+                            return Err(Error::StackUnderflow);
+                        }
+                        let _top = self.values.pop().unwrap();
+                    }
                     "SWAP" => {}
                     "OVER" => {}
                     _ => {
