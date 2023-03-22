@@ -41,7 +41,6 @@ fn subtraction_error() {
 }
 
 #[test]
-#[ignore]
 fn can_multiply_two_numbers() {
     let mut f = Forth::new();
     assert!(f.eval("2 4 *").is_ok());
@@ -49,7 +48,6 @@ fn can_multiply_two_numbers() {
 }
 
 #[test]
-#[ignore]
 fn multiplication_error() {
     let mut f = Forth::new();
     assert_eq!(Err(Error::StackUnderflow), f.eval("1 *"));

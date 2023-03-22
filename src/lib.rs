@@ -76,7 +76,14 @@ impl Forth {
                         let next = self.values.pop().unwrap();
                         self.values.push(next - top);
                     }
-                    "*" => {}
+                    "*" => {
+                        if self.values.len() < 2 {
+                            return Err(Error::StackUnderflow);
+                        }
+                        let top = self.values.pop().unwrap();
+                        let next = self.values.pop().unwrap();
+                        self.values.push(top * next);
+                    }
                     "/" => {}
                     "DUP" => {}
                     "DROP" => {}
