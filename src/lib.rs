@@ -51,13 +51,47 @@ impl Forth {
 
             println!("{}\tword: {}", i, word);
 
+            // numbers, add to value stack
             if is_number(word) {
                 self.values.push(word.parse::<Value>().unwrap());
+                continue;
+            }
+
+            // built in ops
+            if self.is_built_in_operation(word) {
+                match word.as_str() {
+                    "+" => {
+                        if self.values.len() < 2 {
+                            return Err(Error::StackUnderflow);
+                        }
+                        let top = self.values.pop().unwrap();
+                        let next = self.values.pop().unwrap();
+                        self.values.push(top + next);
+                    }
+                    "-" => {}
+                    "*" => {}
+                    "/" => {}
+                    "DUP" => {}
+                    "DROP" => {}
+                    "SWAP" => {}
+                    "OVER" => {}
+                    _ => {
+                        return Err(Error::UnknownWord);
+                    }
+                }
                 continue;
             }
         }
 
         Ok(())
+    }
+
+    fn is_built_in_operation(&self, text: &str) -> bool {
+        if self.ops.contains(&text.to_string()) {
+            return true;
+        }
+
+        false
     }
 }
 
