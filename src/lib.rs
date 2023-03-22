@@ -109,7 +109,15 @@ impl Forth {
                         }
                         let _top = self.values.pop().unwrap();
                     }
-                    "SWAP" => {}
+                    "SWAP" => {
+                        if self.values.len() < 2 {
+                            return Err(Error::StackUnderflow);
+                        }
+                        let top = self.values.pop().unwrap();
+                        let next = self.values.pop().unwrap();
+                        self.values.push(top);
+                        self.values.push(next);
+                    }
                     "OVER" => {}
                     _ => {
                         return Err(Error::UnknownWord);
