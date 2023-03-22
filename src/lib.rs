@@ -41,7 +41,6 @@ impl Forth {
     }
 
     pub fn eval(&mut self, input: &str) -> Result {
-        let orig = input.to_string();
         let words: Vec<String> = input.split_whitespace().map(|s| s.to_string()).collect();
 
         for (i, word) in words.iter().enumerate() {
@@ -59,7 +58,7 @@ impl Forth {
 
             // built in ops
             if self.is_built_in_operation(word) {
-                match word.as_str() {
+                match word.to_uppercase().as_str() {
                     "+" => {
                         if self.values.len() < 2 {
                             return Err(Error::StackUnderflow);
@@ -84,8 +83,26 @@ impl Forth {
                         let next = self.values.pop().unwrap();
                         self.values.push(top * next);
                     }
-                    "/" => {}
-                    "DUP" => {}
+                    "/" => {
+                        if self.values.len() < 2 {
+                            return Err(Error::StackUnderflow);
+                        }
+                        let top = self.values.pop().unwrap();
+                        if top == 0 {
+                            return Err(Error::DivisionByZero);
+                        }
+                        let next = self.values.pop().unwrap();
+                        let result = next / top;
+                        self.values.push(result);
+                    }
+                    "DUP" => {
+                        if self.values.len() < 1 {
+                            return Err(Error::StackUnderflow);
+                        }
+                        let top = self.values.pop().unwrap();
+                        self.values.push(top);
+                        self.values.push(top);
+                    }
                     "DROP" => {}
                     "SWAP" => {}
                     "OVER" => {}
@@ -101,7 +118,7 @@ impl Forth {
     }
 
     fn is_built_in_operation(&self, text: &str) -> bool {
-        if self.ops.contains(&text.to_string()) {
+        if self.ops.contains(&text.to_uppercase()) {
             return true;
         }
 

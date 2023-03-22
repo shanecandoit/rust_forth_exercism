@@ -55,7 +55,6 @@ fn multiplication_error() {
 }
 
 #[test]
-#[ignore]
 fn can_divide_two_numbers() {
     let mut f = Forth::new();
     assert!(f.eval("12 3 /").is_ok());
@@ -63,7 +62,6 @@ fn can_divide_two_numbers() {
 }
 
 #[test]
-#[ignore]
 fn performs_integer_division() {
     let mut f = Forth::new();
     assert!(f.eval("8 3 /").is_ok());
@@ -71,7 +69,6 @@ fn performs_integer_division() {
 }
 
 #[test]
-#[ignore]
 fn division_error() {
     let mut f = Forth::new();
     assert_eq!(Err(Error::StackUnderflow), f.eval("1 /"));
@@ -79,14 +76,12 @@ fn division_error() {
 }
 
 #[test]
-#[ignore]
 fn errors_if_dividing_by_zero() {
     let mut f = Forth::new();
     assert_eq!(Err(Error::DivisionByZero), f.eval("4 0 /"));
 }
 
 #[test]
-#[ignore]
 fn addition_and_subtraction() {
     let mut f = Forth::new();
     assert!(f.eval("1 2 + 4 -").is_ok());
@@ -94,7 +89,6 @@ fn addition_and_subtraction() {
 }
 
 #[test]
-#[ignore]
 fn multiplication_and_division() {
     let mut f = Forth::new();
     assert!(f.eval("2 4 * 3 /").is_ok());
@@ -110,7 +104,6 @@ fn dup() {
 }
 
 #[test]
-#[ignore]
 fn dup_top_value_only() {
     let mut f = Forth::new();
     assert!(f.eval("1 2 dup").is_ok());
@@ -118,7 +111,6 @@ fn dup_top_value_only() {
 }
 
 #[test]
-#[ignore]
 fn dup_case_insensitive() {
     let mut f = Forth::new();
     assert!(f.eval("1 DUP Dup dup").is_ok());
@@ -126,7 +118,6 @@ fn dup_case_insensitive() {
 }
 
 #[test]
-#[ignore]
 fn dup_error() {
     let mut f = Forth::new();
     assert_eq!(Err(Error::StackUnderflow), f.eval("dup"));
